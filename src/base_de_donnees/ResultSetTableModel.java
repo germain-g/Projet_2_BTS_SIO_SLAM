@@ -60,18 +60,49 @@ public class ResultSetTableModel extends AbstractTableModel
             return 0;
         }
     }
-
+    
+    // Nombres de rangé //*****A enlever !!!
+    public Object getValueAt(int rowIndex, int columnIndex) 
+    {
+        if (rowIndex < 0 || rowIndex > getRowCount() || columnIndex < 0 || columnIndex > getColumnCount())
+        {
+            return null;
+        }
+        try 
+        {
+            if (rs == null)
+            {
+                return null;
+            } 
+            else 
+            {
+                rs.absolute(rowIndex + 1);
+                return rs.getObject(columnIndex + 1);
+            }
+        } 
+        catch (SQLException e)
+        {
+            System.out.println("Erreur de rangé");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    // Nom de colonne //*****A enlever !!!
+    @Override
+    public String getColumnName(int columnIndex) 
+    {
+        try 
+        {
+            return rs.getMetaData().getColumnName(columnIndex + 1);
+        } 
+        catch (SQLException e)
+        {
+            System.out.println("Erreur de nom de colonne");
+            System.out.println(e.getMessage());
+        }
+        return super.getColumnName(columnIndex);
+    }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
+    
 }
