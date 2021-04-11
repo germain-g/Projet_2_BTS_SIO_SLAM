@@ -32,7 +32,7 @@ public class Requete_bdd
     {
     	try
     	{
-    	   Class.forName("com.mysql.jdbc.Driver");          
+    	   Class.forName("com.mysql.cj.jdbc.Driver");          
     	   connection = DriverManager.getConnection(url, username, password);
     	} 
     	catch (Exception e) 
@@ -57,7 +57,7 @@ public class Requete_bdd
     }
   
     // Pour l'exécution des requêtes SQL
-    public ResultSet exécutionQuery(String sql)
+    public ResultSet executionQuery(String sql)   
     {
         connexionDatabase();
         ResultSet resultSet = null;
@@ -98,7 +98,7 @@ public class Requete_bdd
         connexionDatabase();
         SQL = "SELECT * FROM " + nomTable;
         System.out.println(SQL);
-        return this.exécutionQuery(SQL);
+        return this.executionQuery(SQL);
     }
     
     // Pour Afficher toutes les tables avec le paramètre "état" choisi //*****A enlever !!!
@@ -106,7 +106,7 @@ public class Requete_bdd
     {
         connexionDatabase();
         SQL = "SELECT * FROM " + nomTable + " WHERE " + état;
-        return this.exécutionQuery(SQL);
+        return this.executionQuery(SQL);
     }
     
     // Pour Sélectionner une colonne spécifique //*****A enlever !!!
@@ -125,7 +125,7 @@ public class Requete_bdd
             }
         }
       SQL += " FROM " + nomTable;
-      return this.exécutionQuery(SQL);
+      return this.executionQuery(SQL);
     }
     
     // Pour Ajouter des données dans la BDD
@@ -135,7 +135,7 @@ public class Requete_bdd
         int i;
         SQL = "INSERT INTO " + nomTable + " VALUES(";
 
-        for (i = 0; i <= contenuTableau.length - 1; i++) 
+        for (i = 0; i <= contenuTableau.length - 1; i++)
         {
             SQL += "'" + contenuTableau[i] + "'";
             if (i < contenuTableau.length - 1)
