@@ -26,6 +26,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class Produit extends JFrame 
 {
@@ -59,17 +61,17 @@ public class Produit extends JFrame
 	     }
 	   
 	   
-  	   void actualiser()
+  	  public void actualiser()
   	   {
   	        txt_co.setText("");
   	        txt_cl.setText("");
   	        txt_ti.setText("");
-  	        txt_ra.setText("");
-  	        txt_re.setText("");
+  	        txt_ra.setText("");      
   	   }
 
 	
-	 private void initComponents()
+	 @SuppressWarnings("serial")
+	private void initComponents()
 	 {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,7 +86,8 @@ public class Produit extends JFrame
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 26));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(92, 86, 774, 154);
+		scrollPane.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPane.setBounds(81, 94, 777, 155);
 		scrollPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) 
@@ -97,7 +100,8 @@ public class Produit extends JFrame
 		});
 		
 		table_prod = new JTable();
-		table_prod.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		table_prod.setBorder(null);
+		table_prod.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table_prod.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null},
@@ -109,15 +113,20 @@ public class Produit extends JFrame
 				"id", "code_produit", "client", "titre", "rangement"
 			}
 		) {
-			
-			private static final long serialVersionUID = 1L;
+			Class[] columnTypes = new Class[] {
+				Integer.class, Object.class, Object.class, Object.class, Object.class
+			};
+			public Class<?> getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false
+				true, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
+		table_prod.getColumnModel().getColumn(0).setResizable(false);
 		scrollPane.setViewportView(table_prod);
 		
 		JButton btnSupprimer = new JButton("supprimer");
@@ -145,7 +154,8 @@ public class Produit extends JFrame
 		btnActualliser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				actualiser(); table(); 
+				actualiser(); 
+				table(); 
 			}
 		});
 		btnActualliser.setFont(new Font("Tahoma", Font.BOLD, 18));

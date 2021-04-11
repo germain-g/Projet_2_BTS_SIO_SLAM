@@ -57,21 +57,22 @@ public class Requete_bdd
     }
   
     // Pour l'exécution des requêtes SQL
-    public ResultSet executionQuery(String sql)   
+     public ResultSet executionQuery(String sql)  
     {
         connexionDatabase();
         ResultSet resultSet = null;
         try 
         {
-            statement = connection.createStatement();
+            statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             resultSet = statement.executeQuery(sql);
-            System.out.println(sql);
+            System.out.println(sql); 
         } 
         catch (SQLException ex)
         {
         	System.err.println(ex);
         }
-      return resultSet;
+        
+        return resultSet;
     }
     
     // Pour l'exécution des requêtes SQL "update"
@@ -101,7 +102,7 @@ public class Requete_bdd
         return this.executionQuery(SQL);
     }
     
-    // Pour Afficher toutes les tables avec le paramètre "état" choisi //*****A enlever !!!
+    // Pour Afficher toutes les tables avec le paramètre "état" choisi
     public ResultSet querySelectAll(String nomTable, String état) 
     {
         connexionDatabase();
@@ -109,7 +110,7 @@ public class Requete_bdd
         return this.executionQuery(SQL);
     }
     
-    // Pour Sélectionner une colonne spécifique //*****A enlever !!!
+    //Pour Sélectionner une colonne spécifique 
     public ResultSet querySelect(String[] nomColonne, String nomTable) 
     {
         connexionDatabase();
@@ -126,7 +127,7 @@ public class Requete_bdd
         }
       SQL += " FROM " + nomTable;
       return this.executionQuery(SQL);
-    }
+    }  
     
     // Pour Ajouter des données dans la BDD
     public String queryInsert(String nomTable, String[] contenuTableau)
@@ -146,7 +147,7 @@ public class Requete_bdd
       SQL += ")";
       return this.exécutionUpdate(SQL);
     }
-    
+      
     // Pour Ajouter des données
     public String queryInsert(String nomTable, String[] nomColonne, String[] contenuTableau)
     {
@@ -201,13 +202,14 @@ public class Requete_bdd
         return this.exécutionUpdate(SQL);
     }
     
-    // Pour Supprimer une donnée avec paramètre //*****A enlever !!!
+    // Pour Supprimer une donnée avec paramètre 
     public String queryDelete(String nomTable, String état)
     {
         connexionDatabase();
         SQL = "DELETE FROM " + nomTable + " WHERE " + état;
         return this.exécutionUpdate(SQL);
     }
-    
+       
     
 }
+
